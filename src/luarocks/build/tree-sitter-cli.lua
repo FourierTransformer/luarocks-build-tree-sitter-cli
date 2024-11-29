@@ -59,7 +59,7 @@ function tree_sitter_cli.run(rockspec, no_install)
 
    util.printout("Extracting " .. filename)
    if platform == "windows" then
-      ok, err = fs_lua.gunzip(filename, "tree-sitter.exe")
+      ok, err = fs_lua.gunzip(filename)
    else
       ok, err = fs_lua.gunzip(filename, "tree-sitter")
    end
