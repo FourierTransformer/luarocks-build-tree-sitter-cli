@@ -1,6 +1,6 @@
 local cfg = require("luarocks.core.cfg")
 local fetch = require("luarocks.fetch")
-local fs_lua = require("luarocks.fs")
+local fs = require("luarocks.fs")
 local util = require("luarocks.util")
 
 local tree_sitter_cli = {}
@@ -45,7 +45,10 @@ function tree_sitter_cli.run(rockspec, no_install)
 
    arch = cpu_arch[platform] and cpu_arch[platform][cfg.target_cpu]
    if not arch then
-      return false, "tree-sitter-cli doesn't support " .. cfg.target_cpu .. " on " .. platform
+      local release_url = string.format("https://github.com/tree-sitter/tree-sitter/releases/tag/v%s", version)
+      return false, "tree-sitter-cli might not support " .. cfg.target_cpu .. " on " .. platform .. [[.
+If your associated CPU arch listed under assets in ]] .. release_url .. [[ please let us know what this error output is
+so we can update the arch mappings accordingly at https://github.com/FourierTransformer/luarocks-build-tree-sitter-cli/issues]]
    end
    table.insert(filename, platform)
    table.insert(filename, arch)
@@ -59,9 +62,11 @@ function tree_sitter_cli.run(rockspec, no_install)
 
    util.printout("Extracting " .. filename)
    if platform == "windows" then
-      ok, err = fs_lua.gunzip(filename)
+      -- Not sure if bug or the tree-sitter gzip file is odd, but this has to not have a filename associated
+      -- otherwise the extraction doesn't work.
+      ok, err = fs.gunzip(filename)
    else
-      ok, err = fs_lua.gunzip(filename, "tree-sitter")
+      ok, err = fs.gunzip(filename, "tree-sitter")
    end
    if not ok then return ok, err end
 
