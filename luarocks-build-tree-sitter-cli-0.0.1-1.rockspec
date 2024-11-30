@@ -16,5 +16,6 @@ dependencies = {
 }
 
 source = {
-    url = "git+https://github.com/FourierTransformer/luarocks-build-tree-sitter-cli"
+    url = "git+https://github.com/FourierTransformer/luarocks-build-tree-sitter-cli",
+    tag = "0.0.1"
 }
