@@ -45,7 +45,7 @@ function tree_sitter_cli.run(rockspec, no_install)
 
    arch = cpu_arch[platform] and cpu_arch[platform][cfg.target_cpu]
    if not arch then
-      local release_url = string.format("https://github.com/tree-sitter/tree-sitter/releases/tag/v%s", version)
+      local release_url = string.format("https://github.com/tree-sitter/tree-sitter/releases/tag/%s", version)
       return false, "tree-sitter-cli might not support " .. cfg.target_cpu .. " on " .. platform .. [[.
 If your associated CPU arch listed under assets in ]] .. release_url .. [[ please let us know what this error output is
 so we can update the arch mappings accordingly at https://github.com/FourierTransformer/luarocks-build-tree-sitter-cli/issues]]
@@ -55,10 +55,10 @@ so we can update the arch mappings accordingly at https://github.com/FourierTran
 
    local filename = table.concat(filename, "-")
 
-   local url = string.format("https://github.com/tree-sitter/tree-sitter/releases/download/v%s/%s.gz", version, filename)
+   local url = string.format("https://github.com/tree-sitter/tree-sitter/releases/download/%s/%s.gz", version, filename)
    util.printout("Downloading " .. url)
    filename, err = fetch.fetch_url(url)
-   if not filename then return filename, err end
+   if not filename then util.printout("\ntree-sitter CLI versions before 0.21.0 do not support the various CPU archs, try version 0.21.0 or after and see if it installs.") return filename, err end
 
    util.printout("Extracting " .. filename)
    if platform == "windows" then
