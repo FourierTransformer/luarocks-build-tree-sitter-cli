@@ -63,6 +63,11 @@ so we can update the arch mappings accordingly at https://github.com/FourierTran
    util.printout("Extracting " .. filename)
    if platform == "windows" then
       ok, err = fs.gunzip(filename, "tree-sitter.exe")
+
+      -- sometimes the above works, sometimes it doesn't. This should allow both!
+      if not ok then
+         ok, err = fs.gunzip(filename)
+      end
    else
       ok, err = fs.gunzip(filename, "tree-sitter")
    end
