@@ -1,7 +1,7 @@
 rockspec_format = "3.0"
 
 package = "luarocks-build-tree-sitter-cli"
-version = "scm-1"
+version = "0.0.3-1"
 
 description = {
     summary = "A LuaRocks build backend to install the tree-sitter CLI",
@@ -17,5 +17,5 @@ dependencies = {
 
 source = {
     url = "git+https://github.com/FourierTransformer/luarocks-build-tree-sitter-cli",
-    branch = "windows-test"
+    tag = "0.0.3"
 }
